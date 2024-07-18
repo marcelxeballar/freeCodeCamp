@@ -120,7 +120,6 @@ function changeInfoColor(background, toAdd, toRemove){
   toRemove.classList.remove("hidden");
 }
 
-
 function validateNumber(number){
   const legalCharacters = /^[0-9()+-]+$/;
   if (legalCharacters.test(number))
