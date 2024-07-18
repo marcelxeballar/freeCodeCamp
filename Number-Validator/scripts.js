@@ -2,10 +2,14 @@ const selectedCountry = document.getElementById("selected-country");
 const countriesList = document.querySelector(".countries-list");
 const numberInput = document.getElementById("user-input");
 const validateButton = document.getElementById("check-btn");
-const clearButton = document.getElementById("clear-btn");
+const clearInput = document.getElementById("clear-input");
 const inputWrapper = document.querySelector(".input-wrapper");
 let info = document.querySelector(".info");
 let infoText = info.querySelector("p");
+
+let infoSpan = document.getElementById("info");
+let failedSpan = document.getElementById("failed");
+
 let listIsOpen = false;
 
 let countries = {
@@ -54,50 +58,79 @@ for (const country of countryChoice){
     selectedCountry.querySelector("img").src = countries[country.id].countryImage;
     selectedCountry.querySelector("p").textContent = countries[country.id].countryName;
     numberInput.placeholder = countries[country.id].numCode;
+
+    changeInfoColor("#3c3221", failedSpan, infoSpan);
+
     countriesList.style.display = "none";
     infoText.textContent = countries[country.id].info;
     listIsOpen = false;
     numberInput.value = "";
-    clearButton.style.display = "none";
+    clearInput.style.display = "none";
   })
 }
 
 numberInput.addEventListener("input", () => {
-  toggleClearButton(); 
+  toggleclearInput(); 
 });
 
 document.addEventListener("keydown", (e) => {
-  setTimeout(toggleClearButton, 0);
+  setTimeout(toggleclearInput, 0);
 });
 
-function toggleClearButton() {
+function toggleclearInput() {
   if (numberInput.value.length > 0) {
-    clearButton.style.display = "block";
+    clearInput.style.display = "block";
   } else {
-    clearButton.style.display = "none";
+    clearInput.style.display = "none";
   }
 }
 
-clearButton.addEventListener("click", () => {
+clearInput.addEventListener("click", () => {
   numberInput.value = "";
-  clearButton.style.display = "none";
+  clearInput.style.display = "none";
+
 });
 
 
 validateButton.addEventListener("click", () => {
   if (numberInput.value.length > 0) {
-  validateButton.textContent = "Validate Again"
-   inputWrapper.style.display= "none";
-   document.getElementById("number-display").textContent = numberInput.value;
+    console.log(numberInput.value);
+    validateButton.textContent = "Validate Again"
+    inputWrapper.style.display= "none";
+    document.getElementById("number-display").textContent = numberInput.value;
+    document.getElementById("intro-display").classList.add("hidden");
 
+    document.getElementById("info-div").classList.add("hidden");
+    document.getElementById("results-div").classList.remove("hidden");
+
+    validateNumber(numberInput.value);
 
   }
   else {
-    infoText.textContent = "FAILED! The number you provided appears to be invalid."
-    info.style.background = "#b62424";
-  let infoSpan = document.getElementById("info");
-  let failedSpan = document.getElementById("failed");
-  infoSpan.classList.add("hidden");
-  failedSpan.classList.remove("hidden");
+    alert("Please provide a phone number");
+    infoText.textContent = "FAILED! Please provide a phone number."
+    changeInfoColor("#b62424", infoSpan, failedSpan);
   }
 })
+
+
+function changeInfoColor(background, toAdd, toRemove){
+  info.style.background = background;
+  toAdd.classList.add("hidden");
+  toRemove.classList.remove("hidden");
+}
+
+
+function validateNumber(number){
+  const legalCharacters = /^[0-9()+-]+$/;
+  if (legalCharacters.test(number))
+  {
+  let cleanedNumber = number.replace(/[-+()]/g, "");
+  console.log("Legal")
+  const regex = /[0-9]/i;
+  }
+  else {
+    console.log("Illegal")
+}
+}
+

@@ -13,7 +13,7 @@
     verified
   </span>
   <h2 id="number-display">Provide your phone number</h2>
-  <p >Please enter the phone number you wish to validate, then click the validate button. At this time, we only support validation for selected numbers.</p>
+  <p id="intro-display">Please enter the phone number you wish to validate, then click the validate button. At this time, we only support validation for selected numbers.</p>
   <div class="input-wrapper flex-row" >
     <div id="country-options-wrapper">
       Country
@@ -40,7 +40,7 @@
     <label for="user-input" class="flex-col" id="user-input-wrapper">
       Phone Number
       <input type="text" id="user-input" placeholder="+1 000 000 000">
-      <button id="clear-btn">
+      <button id="clear-input">
         <span class="material-symbols-outlined">
           delete_forever
           </span>
@@ -48,7 +48,7 @@
     </label>
   </div>
   
-  <div class="info flex-row">
+  <div class="info flex-row" id="info-div">
     <span id="info" class="material-symbols-outlined">
       info
     </span>
@@ -57,7 +57,14 @@
     </span>
     <p>Type a US-based phone number as +1 (AAA) BBB-CCCC.</p>
   </div>
+  <div class="info flex-row hidden" id="results-div">
+    <span id="info" class="material-symbols-outlined">
+      info
+    </span>
+    <p>Valid US number: 1 555-555-5555</p>
+  </div>
   <button id="check-btn">Validate</button>
+  <button class="hidden" id="clear-btn">Validate Again</button>
 </div>
 </body>
 <script src="scripts.js"> </script>
