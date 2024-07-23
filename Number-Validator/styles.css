@@ -10,15 +10,18 @@
 :root{
   --dark: #212121;
   --blue: #243856;
-  --dark-blue: #2a92f7;
+  --light-blue: #2a92f7;
   --grey: #494949;
   --purple: #256afc;
   --dark-purple:  #4680fd;
   --dark-orange: #3c3221; 
-  --orange: #ebb068;
+  --orange: #895212;
  --red: #b62424;
 }
 
+.hidden {
+  display: none;
+}
 .flex-col{
   display: flex;
   flex-direction: column;
@@ -38,179 +41,125 @@ p {
   text-align: justify;
 }
 
-body {
-  background: var(--dark);
-  justify-content: center;
-  height: 100vh;
-}
-
-#validator-container{
-  margin: 0 auto;
-  width: 100%;
-  max-width: 55rem;
-}
-
-#verified{
-  font-size: 2.7rem;
-  background: var(--blue);
-  padding: 1rem;
-  border-radius: 0.8rem;
-  color: var(--dark-blue);
-  margin-bottom: 3rem;
-}
 
 h2 {
+  margin: 2rem 0;
   font-size: 3rem;
-  margin-bottom: 1rem;
 }
 
-.input-wrapper {
-  margin-top: 4rem;
-
-}
-
-label, #country-options-wrapper {
-  flex: 1;
-  font-size: 1.6rem;
-}
-
-#country-options-wrapper{
-  margin-right: 1.5rem;
- position: relative;
-}
-
-
-#selected-country{
-  cursor: pointer;
-  margin-top: 0.5rem;
-  border: 1px solid var(--grey);
-  border-radius: 0.7rem;
-  height: 4rem;
-}
-
-
-#selected-country, .country-choice p {
-  align-self: center;
-}
-
-#selected-country:hover {
-  background: var(--grey);
-}
-
-#selected-country img,  .country-choice img{
-  margin-right: 1rem;
-  margin-left: 1rem;
-  align-self: center;
-  height: 3rem;
-  width: 3rem;
-}
-
-#selected-country p {
-  align-self: center;
-}
-
-
-.countries-list {
-  display: none;
-  position: absolute;
-  z-index: 100;
+body {
+  max-width: 55rem;
+  margin: 0 auto;
+  height: 100vh;
+  justify-content: center;
   background: var(--dark);
-  width: 100%;
-  margin-top: 0.5rem;
-  border-radius: 0.7rem;
-  border: 1px solid var(--grey);
 }
 
-.countries-list div {
+.container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.verify-icon {
+  background: var(--blue);
+  color: var(--light-blue);
+  padding: 1rem;
+  border-radius: 0.7rem;
+}
+
+.container {
+  text-align: justify;
+  margin-top: 2rem;
+}
+
+.container:nth-child(1){
   margin-top: 0;
 }
 
-.country-choice {
-  height: 3.5rem;
-
-}
-
-.country-choice:hover{
-  background: var(--grey);
-}
-#user-input-wrapper{
+.country-wrapper, label {
   position: relative;
+  margin-top: 3rem;
+  flex: 1;
 }
 
-select, option, input {
-  background: var(--dark);
-  display: block;
+.ct-selected, label, .ct-list div {
+  align-items: center;
+  padding: 0.5rem;
   border: 1px solid var(--grey);
-  outline: var(--purple);
-}
-
-select {
-  width: 100%;
-}
-
-select, input{
-  margin-top: 0.5rem;
-  padding: 1rem;
   border-radius: 0.7rem;
 }
 
-select { 
-  -moz-appearance: none; 
-  -webkit-appearance: none; 
-} 
+.ct-selected img, .ct-list img{
+  padding-left: 0.7rem;
+  height: 3.5rem;
+}
 
-select::-ms-expand { 
-  display: none; 
-} 
+.ct-selected p {
+  margin: 0;
+}
 
-#clear-input  {
-  display: none;
-  cursor: pointer;
+.ct-list,  .delete-input  {
   position: absolute;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  background: transparent;
+}
+
+.ct-list{
+  border: 1px solid var(--grey);
+  border-radius: 0.7rem;
+  width: 100%;
+  top: 5.2rem;
+  background: var(--dark);
+  z-index: 100;
+}
+
+.ct-list div{
   border: none;
 }
 
-#clear-input .material-symbols-outlined{
-  color: white;
-  font-size: 2.5rem;
-}
-#clear-input .material-symbols-outlined:hover {
-  color: var(--orange);
-}
-
-.info {
-  align-items: center;
-  margin-top: 3rem;
-  background: var(--dark-orange);
-  padding: 1.5rem;
-  border-radius: 0.7rem;
-}
-
-.info p {
+label, .ct-selected p, .ct-list p  {
   margin-left: 1rem;
 }
 
-.info span {
-  font-size: 2.5rem;
+input   {
+  margin: 0 3rem 0 1rem;
+  border: 0;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  outline: none;
 }
 
-#check-btn, #clear-btn{
-  margin-top: 5rem;
-  padding: 1rem;
-  width: 100%;
-  background: var(--purple);
+.delete-input {
+  z-index: 100;
+  right: 1rem;
+  top: 1rem;
+}
+
+.tip-container {
+  margin-top: 1rem;
   border-radius: 0.7rem;
+  background-color: var(--orange);
+}
+
+.tip-container p{
+  margin: 1rem 1.5rem;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  background:var(--purple);
   border: none;
+  border-radius: 0.7rem;
+}
+
+.ct-selected:hover, 
+label:hover, 
+.ct-list div:hover, 
+button:hover, 
+.delete-input:hover {
   cursor: pointer;
 }
 
-#check-btn:hover {
-  background: var(--dark-purple);
-}
-
-.hidden {
-  display: none !important;
+.ct-list div:hover{
+  background: var(--blue);
 }

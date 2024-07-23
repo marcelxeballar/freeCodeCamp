@@ -1,135 +1,99 @@
-const selectedCountry = document.getElementById("selected-country");
-const countriesList = document.querySelector(".countries-list");
-const numberInput = document.getElementById("user-input");
-const validateButton = document.getElementById("check-btn");
-const clearInput = document.getElementById("clear-input");
-const inputWrapper = document.querySelector(".input-wrapper");
-let info = document.querySelector(".info");
-let infoText = info.querySelector("p");
+document.addEventListener("DOMContentLoaded", (event) => {
+const countrySelected = document.querySelector(".ct-selected");
+const countryList  = document.querySelector(".ct-list");
+const tip = document.querySelector(".tip-container");
+const input = document.getElementById("user-input");
+const checkButton = document.getElementById("check-btn")
 
-let infoSpan = document.getElementById("info");
-let failedSpan = document.getElementById("failed");
-
-let listIsOpen = false;
-
-let countries = {
-  "country-usa": {
-    countryName: "United States",
-    countryImage: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/United-States-of-America.png",
-    numCode: "+1 000 000 000",
-    info: "Type a US-based phone number as +1 (AAA) BBB-CCCC."
+const countryInfo = {
+  us: {
+    name: "United States",
+    flag: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/United-States-of-America.png",
+    text: "Type a US phone number as (123) 456-7890."
   },
-  "country-br": {
-    countryName: "Brazil",
-    countryImage: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/Brazil.png",
-    numCode: "+55 0000 00000",
-    info: "Type a Brazilian-based phone number as +55 (AA) BBBB-CCCCC."
-  },
-  "country-ph": {
-    countryName: "Philippines",
-    countryImage: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/Philippines.png",
-    numCode: "+63 000 000 0000",
-    info: "Type a Philippine-based phone number as +63 (AAA) BBB-CCCC."
-  }
-  }
+  br: {
+    name: "Brazil",
+    flag: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/Brazil.png",
+    text: "Type a Brazilian phone number as +55 11 91234-5678."
 
-function toggleList() {
-  countriesList.style.display = listIsOpen ? "none" : "block";
-  listIsOpen = !listIsOpen;
+  },
+  ph: {
+    name: "Philippines",
+    flag: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/Philippines.png",
+    text: "Type a Philippine phone number as +63 912 345 6789."
+  },
+  icons: {
+    info: `info`,
+    wrong: `dangerous`,
+    correct: `verified`
+  }
 }
 
-selectedCountry.addEventListener("click", (event) => {
-  event.stopPropagation(); 
-  toggleList();
-});
+countryList.innerHTML = `
+  <div class="flex-row countries" id="us">
+    <img src=${countryInfo.us.flag}>
+    <p>${countryInfo.us.name}</p>
+  </div>
+  <div class="flex-row countries" id="br">
+    <img src=${countryInfo.br.flag}>
+    <p>${countryInfo.br.name}</p>
+  </div>
+  <div class="flex-row countries" id="ph">
+    <img src=${countryInfo.ph.flag}>
+    <p>${countryInfo.ph.name}</p>
+  </div>
+`;
 
-document.addEventListener("click", (event) => {
-  const targetElement = event.target;
+/* Functions */
+tip.innerHTML = `
+    <p>
+    <span class="material-symbols-outlined">${countryInfo.icons.info}</span>
+    ${countryInfo.us.text}
+    </p>
+`;
 
-  if (!selectedCountry.contains(targetElement) && !countriesList.contains(targetElement)) {
-    countriesList.style.display = "none";
-    listIsOpen = false;
-  }
-});
 
-const countryChoice = document.getElementsByClassName("country-choice");
-for (const country of countryChoice){
-  country.addEventListener("click", () => {
-    selectedCountry.querySelector("img").src = countries[country.id].countryImage;
-    selectedCountry.querySelector("p").textContent = countries[country.id].countryName;
-    numberInput.placeholder = countries[country.id].numCode;
+function updateCountrySelected(country){
+  countrySelected.innerHTML = `
+  <img src=${countryInfo[country].flag}>
+  <p>${countryInfo[country].name}</p>
+`;
+}
 
-    changeInfoColor("#3c3221", failedSpan, infoSpan);
 
-    countriesList.style.display = "none";
-    infoText.textContent = countries[country.id].info;
-    listIsOpen = false;
-    numberInput.value = "";
-    clearInput.style.display = "none";
+function updateTip(background, text){
+  tip.style.background = background;
+  tip.querySelector("p").innerText = text;
+}
+
+/* Runs after the innerHTML is loaded. */
+/* Runs after the innerHTML is loaded. */
+
+  updateCountrySelected("us");
+  
+  countrySelected.addEventListener("click", () => {
+    countryList.classList.toggle("hidden");
+  });
+
+  const countries =  document.querySelectorAll(".countries");
+  countries.forEach(function(country) {
+    country.addEventListener("click", function(){
+      console.log(country.id)
+      updateCountrySelected(`${country.id}`);
+      countryList.classList.toggle("hidden");
+      updateTip("#895212", countryInfo[country.id].text)
+    })
   })
-}
 
-numberInput.addEventListener("input", () => {
-  toggleclearInput(); 
+
+  checkButton.addEventListener("click", () => {
+    if (input.value === "" && input.value.length === 0){
+      alert("Please provide a phone number");
+      updateTip("#b62424", "DENIED! It's seems you did not provide provided a number.");
+    }
+    else {
+      console.log(input.value)
+    }
+  })
+  
 });
-
-document.addEventListener("keydown", (e) => {
-  setTimeout(toggleclearInput, 0);
-});
-
-function toggleclearInput() {
-  if (numberInput.value.length > 0) {
-    clearInput.style.display = "block";
-  } else {
-    clearInput.style.display = "none";
-  }
-}
-
-clearInput.addEventListener("click", () => {
-  numberInput.value = "";
-  clearInput.style.display = "none";
-
-});
-
-
-validateButton.addEventListener("click", () => {
-  if (numberInput.value.length > 0) {
-    console.log(numberInput.value);
-    validateButton.textContent = "Validate Again"
-    inputWrapper.style.display= "none";
-    document.getElementById("number-display").textContent = numberInput.value;
-    document.getElementById("intro-display").classList.add("hidden");
-
-    document.getElementById("info-div").classList.add("hidden");
-    document.getElementById("results-div").classList.remove("hidden");
-
-    validateNumber(numberInput.value);
-
-  }
-  else {
-    alert("Please provide a phone number");
-    infoText.textContent = "FAILED! Please provide a phone number."
-    changeInfoColor("#b62424", infoSpan, failedSpan);
-  }
-})
-
-
-function changeInfoColor(background, toAdd, toRemove){
-  info.style.background = background;
-  toAdd.classList.add("hidden");
-  toRemove.classList.remove("hidden");
-}
-
-function validateNumber(number){
-  const legalCharacters = /^[0-9()+-]+$/;
-  if (legalCharacters.test(number))
-  {
-  let cleanedNumber = number.replace(/[-+()]/g, "");
-  console.log("Legal")
-  const regex = /[0-9]/i;
-  }
-  else {
-    console.log("Illegal")
-}
-}
-
