@@ -141,7 +141,13 @@ input   {
 }
 
 .tip-container p{
-  margin: 1rem 1.5rem;
+  align-items: center;
+  width: 100%;
+  margin: 1.5rem;
+}
+
+.tip-container p span {
+  margin-right: 1rem;
 }
 
 button {

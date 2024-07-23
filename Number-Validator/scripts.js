@@ -9,24 +9,26 @@ const countryInfo = {
   us: {
     name: "United States",
     flag: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/United-States-of-America.png",
-    text: "Type a US phone number as (123) 456-7890."
   },
   br: {
     name: "Brazil",
     flag: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/Brazil.png",
-    text: "Type a Brazilian phone number as +55 11 91234-5678."
-
   },
   ph: {
     name: "Philippines",
     flag: "https://cdn0.iconfinder.com/data/icons/195-flat-flag-psd-icons/70/Philippines.png",
-    text: "Type a Philippine phone number as +63 912 345 6789."
   },
   icons: {
     info: `info`,
     wrong: `dangerous`,
     correct: `verified`
-  }
+  },
+  message: {
+    us: "Type a US phone number as (123) 456-7890.",
+    br: "Type a Brazilian phone number as +55 11 91234-5678.",
+    ph: "Type a Philippine phone number as +63 912 345 6789.",
+    error: "OPPS! It seems you did not provide a number."
+  },
 }
 
 countryList.innerHTML = `
@@ -45,13 +47,7 @@ countryList.innerHTML = `
 `;
 
 /* Functions */
-tip.innerHTML = `
-    <p>
-    <span class="material-symbols-outlined">${countryInfo.icons.info}</span>
-    ${countryInfo.us.text}
-    </p>
-`;
-
+/* Functions */
 
 function updateCountrySelected(country){
   countrySelected.innerHTML = `
@@ -60,20 +56,32 @@ function updateCountrySelected(country){
 `;
 }
 
-
-function updateTip(background, text){
+function updateTip(background, iconKey, typeOfMessage){
   tip.style.background = background;
-  tip.querySelector("p").innerText = text;
+  tip.innerHTML = `
+  <p class="flex-row">
+  <span class="material-symbols-outlined">${countryInfo.icons[iconKey]}</span>
+  ${countryInfo.message[typeOfMessage]}
+  </p>
+`;
 }
 
 /* Runs after the innerHTML is loaded. */
 /* Runs after the innerHTML is loaded. */
 
   updateCountrySelected("us");
+  updateTip("#895212", "info", "us")
   
-  countrySelected.addEventListener("click", () => {
+  countrySelected.addEventListener("click", (event) => {
+    event.stopPropagation();
     countryList.classList.toggle("hidden");
   });
+
+ document.addEventListener("click", () => {
+  if(!countryList.classList.contains("hidden")){
+    countryList.classList.toggle("hidden");
+  }
+ })
 
   const countries =  document.querySelectorAll(".countries");
   countries.forEach(function(country) {
@@ -81,19 +89,18 @@ function updateTip(background, text){
       console.log(country.id)
       updateCountrySelected(`${country.id}`);
       countryList.classList.toggle("hidden");
-      updateTip("#895212", countryInfo[country.id].text)
+      updateTip("#895212", "info", country.id)
+      countryListIsOpen = true;
     })
   })
-
 
   checkButton.addEventListener("click", () => {
     if (input.value === "" && input.value.length === 0){
       alert("Please provide a phone number");
-      updateTip("#b62424", "DENIED! It's seems you did not provide provided a number.");
+      updateTip("#b62424", "wrong", "error");
     }
     else {
       console.log(input.value)
     }
   })
-  
 });
