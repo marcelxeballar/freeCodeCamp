@@ -38,6 +38,9 @@ p {
   text-align: justify;
 }
 
+.intro {
+  margin-bottom: 4.5rem;
+}
 
 h2 {
   margin: 2rem 0;
@@ -75,7 +78,6 @@ body {
 
 .country-wrapper, label {
   position: relative;
-  margin-top: 4.5rem;
   flex: 1;
 }
 

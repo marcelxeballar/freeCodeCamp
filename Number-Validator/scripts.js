@@ -7,6 +7,10 @@ const resultDiv = document.getElementById("results-div")
 const input = document.getElementById("user-input");
 const deleteInputBtn= document.querySelector(".delete-input");
 const checkButton = document.getElementById("check-btn");
+
+const h2 = document.querySelector("h2");
+const intro = document.querySelector(".info");
+const clearButton = document.getElementById("clear-btn");
 let countryID = "US";
 
 const countryInfo = {
@@ -31,14 +35,13 @@ const countryInfo = {
     correct: `verified`
   },
   message: {
-    error: "OPPS! It seems you did not provide a number."
+    error: "OPPS! It seems you did not provide a number.",
   },
 }
 
 countryInfo.message.us = `Type a US phone number as ${countryInfo.us.placeholder}.`;
 countryInfo.message.br = `Type a BR phone number as ${countryInfo.br.placeholder}.`;
 countryInfo.message.ph = `Type a PH phone number as ${countryInfo.ph.placeholder}.`;
-countryInfo.message.error = "OPPS! It seems you did not provide a number.";
 
 countryList.innerHTML = `
   <div class="flex-row countries" id="us">
@@ -77,7 +80,7 @@ function updateResult(background, iconKey, tipMessage){
   resultDiv.style.background = background;
   resultDiv.innerHTML = `
   <span class="material-symbols-outlined">${countryInfo.icons[iconKey]}</span>
-  <p id="result-message">${countryInfo.message[tipMessage]}</p>
+  <p id="result-message">${tipMessage}</p>
 `;
 };
 
@@ -152,7 +155,40 @@ const toggleInputDlt = () => {
       console.log(true);
     }
     else {
-      deleteInputBtn.style.display = "none"; 
+      h2.textContent = input.value;
+      h2.style.marginBottom = "0";
+    
+      document.querySelector(".input-wrapper").style.display = "none"; 
+      document.querySelector(".intro").style.display = "none"; 
+      deleteInputBtn.classList.toggle("hidden"); 
+
+      tipDiv.classList.toggle("hidden");
+      resultDiv.classList.toggle("hidden");
+      
+      updateResult("#b62424", "failed",  `Invalid ${countryID} number: ${input.value}`);
+      console.log(input.value)
+      checkButton.classList.toggle("hidden");
+      clearButton.classList.toggle("hidden");
     }
   }
+
+  clearButton.addEventListener("click", () => {
+    input.value = "";
+
+    h2.textContent = "Validate your phone number.";
+    h2.style.marginBottom = "0";
+
+    document.querySelector(".input-wrapper").style.display = "flex"; 
+    document.querySelector(".intro").style.display = "block"; 
+    deleteInputBtn.style.display = "block"; 
+
+    tipDiv.classList.toggle("hidden");
+    resultDiv.classList.toggle("hidden");
+    
+    updateResult("#b62424", "failed",  `Invalid ${countryID} number: ${input.value}`);
+    console.log(input.value)
+
+    checkButton.classList.toggle("hidden");
+    clearButton.classList.toggle("hidden");
+  })
 });
