@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="styles.css">
   <title>Number Validator</title>
 </head>
 <body class="flex-col ">
@@ -12,8 +12,8 @@
     <span class="material-symbols-outlined verify-icon">
       verified
     </span>
-    <h2>Provide your phone number</h2>
-    <p>Provide your number using the format provided. To validate, simply click the button.</p>
+    <h2>Validate your phone number</h2>
+    <p>Please enter your phone number using the format provided. Once entered, you can validate it by clicking the button. Currently we only support phone numbers from the US, Brazil (BR), and the Philippines (PH).</p>
     <div class="input-wrapper flex-row">
       <div class="country-wrapper flex-col">
         <div class="ct-selected flex-row">
@@ -21,14 +21,16 @@
         <div class="ct-list hidden"></div>
       </div>
       <label class="flex-row">
-        <input id ="user-input" type="text" placeholder="09090909">
-        <span class="material-symbols-outlined  delete-input">
+        <input id ="user-input" type="text" placeholder="+1 (AAA) BB-CCCC">
+        <span class="material-symbols-outlined delete-input hidden">
           delete
           </span>
       </label>
     </div>
   </div>
   <div class="tip-container container flex-row">
+  </div>
+  <div class="result-container container flex-row hidden" id="results-div">
   </div>
   <div class="button-container flex-col container">
     <button id="check-btn">Validate</button>

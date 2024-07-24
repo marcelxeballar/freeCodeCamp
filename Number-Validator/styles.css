@@ -19,9 +19,6 @@
  --red: #b62424;
 }
 
-.hidden {
-  display: none;
-}
 .flex-col{
   display: flex;
   flex-direction: column;
@@ -78,7 +75,7 @@ body {
 
 .country-wrapper, label {
   position: relative;
-  margin-top: 3rem;
+  margin-top: 4.5rem;
   flex: 1;
 }
 
@@ -134,20 +131,22 @@ input   {
   top: 1rem;
 }
 
-.tip-container {
+.tip-container, .result-container {
+  text-align: center;
   margin-top: 1rem;
   border-radius: 0.7rem;
   background-color: var(--orange);
 }
 
-.tip-container p{
+.tip-container p, .result-container p{
   align-items: center;
   width: 100%;
-  margin: 1.5rem;
+  margin: 1.5rem 1.5rem 1.5rem 1rem;
 }
 
-.tip-container p span {
-  margin-right: 1rem;
+.tip-container span, .result-container span {
+  align-self: center;
+  margin-left: 1rem;
 }
 
 button {
@@ -168,4 +167,8 @@ button:hover,
 
 .ct-list div:hover{
   background: var(--blue);
+}
+
+.hidden {
+  display: none ;
 }
