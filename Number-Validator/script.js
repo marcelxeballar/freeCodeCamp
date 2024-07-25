@@ -1,8 +1,11 @@
 document.addEventListener("DOMContentLoaded", (event) => {
 const countrySelected = document.querySelector(".ct-selected");
 const countryList  = document.querySelector(".ct-list");
-const tipDiv = document.querySelector(".tip-container");
-const resultDiv = document.getElementById("results-div")
+
+const tipResultContainer = document.querySelector(".tip-result-container")
+
+const tipWrapper = document.querySelector(".tip-wrapper");
+const resultWrapper = document.querySelector(".result-wrapper")
 
 const input = document.getElementById("user-input");
 const deleteInputBtn= document.querySelector(".delete-input");
@@ -68,21 +71,16 @@ function updateCountrySelected(country){
 `;
 };
 
-function updateTip(background, iconKey, tipMessage){
-  tipDiv.style.background = background;
-  tipDiv.innerHTML = `
-  <span class="material-symbols-outlined">${countryInfo.icons[iconKey]}</span>
+function updateTipResult(background, tipIcon, tipMessage, resultIcon, resultMessage){
+  tipResultContainer.style.background = background;
+  tipWrapper.innerHTML = `
+  <span class="material-symbols-outlined">${countryInfo.icons[tipIcon]}</span>
   <p id="tip-message">${countryInfo.message[tipMessage]}</p>
-`;
+  `;
+  resultWrapper.querySelector("span").textContent = countryInfo.icons[resultIcon];
+  resultWrapper.querySelector("p").textContent = resultMessage;
 };
 
-function updateResult(background, iconKey, tipMessage){
-  resultDiv.style.background = background;
-  resultDiv.innerHTML = `
-  <span class="material-symbols-outlined">${countryInfo.icons[iconKey]}</span>
-  <p id="result-message">${tipMessage}</p>
-`;
-};
 
 const toggleInputDlt = () => {
   if (input.value.length > 0){
@@ -98,9 +96,8 @@ const toggleInputDlt = () => {
 
 //Display us-selected 
   updateCountrySelected("us");
-  updateTip("#895212", "info", "us")
-  updateResult("", "", "");
-  
+  updateTipResult("#895212", "info", "us")
+
   //Shows Country-list
   countrySelected.addEventListener("click", (event) => {
     event.stopPropagation();
@@ -120,7 +117,7 @@ const toggleInputDlt = () => {
     country.addEventListener("click", function(){
       updateCountrySelected(`${country.id}`);
       countryList.classList.toggle("hidden");
-      updateTip("#895212", "info", country.id)
+      updateTipResult("#895212", "info", country.id)
       input.placeholder = countryInfo[country.id].placeholder;
       input.value = "";
       countryID = country.id.toUpperCase();
@@ -138,18 +135,19 @@ const toggleInputDlt = () => {
     toggleInputDlt()
   });
 
-  //Changes Tip
 
+  //Empty
   checkButton.addEventListener("click", () => {
     if (input.value === "" && input.value.length === 0){
       alert("Please provide a phone number");
-      updateTip("#b62424", "failed", "error");
+      updateTipResult("#b62424", "failed", "error");
     }
     else {
       numberValidation(input.value)
     };
   });
 
+  //Number Validator
   function numberValidation(number){
     if (/^[0-9()+\s-]*$/.test(number)){
       console.log(true);
@@ -157,38 +155,32 @@ const toggleInputDlt = () => {
     else {
       h2.textContent = input.value;
       h2.style.marginBottom = "0";
-    
-      document.querySelector(".input-wrapper").style.display = "none"; 
-      document.querySelector(".intro").style.display = "none"; 
-      deleteInputBtn.classList.toggle("hidden"); 
+      UIUpdate("none", "none")
 
-      tipDiv.classList.toggle("hidden");
-      resultDiv.classList.toggle("hidden");
-      
-      updateResult("#b62424", "failed",  `Invalid ${countryID} number: ${input.value}`);
-      console.log(input.value)
-      checkButton.classList.toggle("hidden");
-      clearButton.classList.toggle("hidden");
+      updateTipResult("#b62424", "", "", "failed", `Invalid ${countryID} number: ${input.value}`);
     }
   }
 
   clearButton.addEventListener("click", () => {
     input.value = "";
+    toggleInputDlt();
 
     h2.textContent = "Validate your phone number.";
-    h2.style.marginBottom = "0";
+    h2.style.marginBottom = "2rem";
+    UIUpdate("flex", "block");
+    updateTipResult("#895212", "info", countryID.toLowerCase())
 
-    document.querySelector(".input-wrapper").style.display = "flex"; 
-    document.querySelector(".intro").style.display = "block"; 
-    deleteInputBtn.style.display = "block"; 
+    resultWrapper.querySelector("p").textContent = "";
+    });
 
-    tipDiv.classList.toggle("hidden");
-    resultDiv.classList.toggle("hidden");
-    
-    updateResult("#b62424", "failed",  `Invalid ${countryID} number: ${input.value}`);
-    console.log(input.value)
-
-    checkButton.classList.toggle("hidden");
-    clearButton.classList.toggle("hidden");
-  })
+    //UI Update
+    function UIUpdate(inputWrapDisplay, introDisplay) {
+      document.querySelector(".input-wrapper").style.display = inputWrapDisplay; 
+      document.querySelector(".intro").style.display = introDisplay; 
+  
+      tipWrapper.classList.toggle("hidden");
+      resultWrapper.classList.toggle("hidden");
+      checkButton.classList.toggle("hidden");
+      clearButton.classList.toggle("hidden");
+      }
 });

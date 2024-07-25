@@ -133,22 +133,19 @@ input   {
   top: 1rem;
 }
 
-.tip-container, .result-container {
-  text-align: center;
-  margin-top: 1rem;
-  border-radius: 0.7rem;
+.tip-result-container{
+  padding: 1.5rem 0;
   background-color: var(--orange);
+  border-radius: 0.7rem;
 }
 
-.tip-container p, .result-container p{
-  align-items: center;
+.tip-wrapper p, .result-wrapper p {
   width: 100%;
-  margin: 1.5rem 1.5rem 1.5rem 1rem;
+  margin-left: 1rem;
 }
 
-.tip-container span, .result-container span {
-  align-self: center;
-  margin-left: 1rem;
+.tip-wrapper span, .result-wrapper span{
+  margin-left: 1.5rem;
 }
 
 button {
