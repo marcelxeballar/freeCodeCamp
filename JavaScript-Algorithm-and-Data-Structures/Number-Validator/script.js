@@ -125,14 +125,12 @@ const toggleInputDlt = () => {
   //Toggle the trash can icon.
   input.addEventListener("keyup", (event) =>{
     toggleInputDlt()
-    console.log(input.value.length)
   });
 
   deleteInputBtn.addEventListener("click", () => {
     input.value = "";
     toggleInputDlt()
   });
-
 
   //Checks if input is empty
   checkButton.addEventListener("click", (event) => {
@@ -155,7 +153,6 @@ const toggleInputDlt = () => {
     UIUpdate("none", "none");
 
     if (/^[0-9()\s-]*$/.test(number)){
-      console.log(number);
       switch(countryID){
         case "US" : resultDisplay(number);
           break;
